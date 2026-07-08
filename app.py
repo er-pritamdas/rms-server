@@ -63,8 +63,6 @@ def handle_event(data: dict):
 
         parsed_message = parse_message(event)
 
-        print(parsed_message)
-
         handle_message(parsed_message)
 
     else:

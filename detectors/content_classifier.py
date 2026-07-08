@@ -29,7 +29,9 @@ from models.message import ParsedMessage
 # URL Patterns
 # --------------------------------------------------------------------
 
-INSTAGRAM_REEL = re.compile(r"https?://(www\.)?instagram\.com/reel/")
+INSTAGRAM_REEL = re.compile(
+    r"https?://(www\.)?instagram\.com/reels?/([A-Za-z0-9_-]+)/?"
+)
 INSTAGRAM_POST = re.compile(r"https?://(www\.)?instagram\.com/p/")
 INSTAGRAM_PROFILE = re.compile(
     r"https?://(www\.)?instagram\.com/[^/?]+/?$"
