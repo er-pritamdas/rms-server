@@ -1,7 +1,7 @@
 """
 Console Printer
 
-Pretty prints ParsedMessage objects.
+Pretty prints ParsedMessage and DetectedContent objects.
 """
 
 from models.content import (
@@ -11,25 +11,28 @@ from models.content import (
     TextContent,
 )
 
+from models.detected_content import DetectedContent
 from models.message import ParsedMessage
 
 
+# ==========================================================
+# Parsed Message
+# ==========================================================
+
+
 def print_message(message: ParsedMessage):
-    """
-    Pretty print a ParsedMessage.
-    """
 
     print()
 
-    print("=" * 80)
-    print("📩 New Slack Message")
-    print("=" * 80)
+    print("📩 Parsed Message")
+    print("-" * 80)
 
     print(f"👤 User      : {message.user}")
     print(f"📺 Channel   : {message.channel}")
     print(f"⏰ Timestamp : {message.timestamp}")
 
     print()
+
     print("Content")
     print("-" * 80)
 
@@ -37,17 +40,17 @@ def print_message(message: ParsedMessage):
         print("No Content Found")
 
     for content in message.content:
-
         print_content(content)
 
-    print("=" * 80)
     print()
 
 
+# ==========================================================
+# Content
+# ==========================================================
+
+
 def print_content(content: Content):
-    """
-    Dispatch content to the correct printer.
-    """
 
     if isinstance(content, TextContent):
         print_text(content)
@@ -65,33 +68,25 @@ def print_content(content: Content):
 def print_text(content: TextContent):
 
     print("📝 Text")
-
     print(f"    {content.value}")
-
     print()
 
 
 def print_emoji(content: EmojiContent):
 
     print("😊 Emoji")
-
     print(f"    Name     : {content.name}")
-
     print(f"    Unicode  : U+{content.unicode.upper()}")
-
     print()
 
 
 def print_link(content: LinkContent):
 
     print("🔗 Link")
-
-    print(f"    URL          : {content.value}")
+    print(f"    URL           : {content.value}")
 
     if content.display_text:
-        print(f"    Display Text : {content.display_text}")
-
-    print(f"    Truncated    : {content.truncated}")
+        print(f"    Display Text  : {content.display_text}")
 
     print()
 
@@ -99,7 +94,45 @@ def print_link(content: LinkContent):
 def print_unknown(content: Content):
 
     print("❓ Unknown Content")
-
     print(content.model_dump())
+    print()
 
+
+# ==========================================================
+# Detected Content
+# ==========================================================
+
+
+def print_detected_content(
+    detected_content: list[DetectedContent],
+):
+
+    print()
+    print("🔍 Content Classification")
+    print("-" * 80)
+
+    if not detected_content:
+        print("No resources detected.")
+        print()
+        return
+
+    for resource in detected_content:
+
+        print(f"✅ {resource.type}")
+
+        print(f"    URL : {resource.url}")
+
+        if resource.title:
+            print(f"    Title : {resource.title}")
+
+        if resource.metadata:
+
+            print("    Metadata")
+
+            for key, value in resource.metadata.items():
+                print(f"        {key}: {value}")
+
+        print()
+
+    print("-" * 80)
     print()
