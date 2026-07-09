@@ -27,6 +27,8 @@ from processors.website_processor import process_website
 from processors.youtube_processor import process_youtube
 
 
+from logger.logger import logger
+
 PROCESSOR_REGISTRY = {
 
     InstagramReel: process_instagram,
@@ -51,10 +53,12 @@ PROCESSOR_REGISTRY = {
 
 
 def route(content):
-
+    logger.info(f"Routing content type '{type(content).__name__}'")
     processor = PROCESSOR_REGISTRY.get(type(content))
 
     if processor is None:
+        logger.warning(f"No processor registered for type '{type(content).__name__}', routing to process_unknown")
         return process_unknown(content)
 
+    logger.info(f"Routing to processor '{processor.__name__}'")
     return processor(content)

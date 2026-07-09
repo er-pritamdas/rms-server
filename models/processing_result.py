@@ -5,6 +5,9 @@ Processing Result Model
 from typing import Literal
 
 from pydantic import BaseModel, Field
+from logger.logger import logger
+
+logger.info("Processing result models module loaded.")
 
 
 class ProcessingResult(BaseModel):

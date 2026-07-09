@@ -13,6 +13,7 @@ from models.content import (
 
 from models.detected_content import DetectedContent
 from models.message import ParsedMessage
+from logger.logger import logger
 
 
 # ==========================================================
@@ -21,6 +22,7 @@ from models.message import ParsedMessage
 
 
 def print_message(message: ParsedMessage):
+    logger.info("Pretty printing parsed message to console")
 
     print()
 
@@ -106,6 +108,7 @@ def print_unknown(content: Content):
 def print_detected_content(
     detected_content: list[DetectedContent],
 ):
+    logger.info("Pretty printing content classification to console")
 
     print()
     print("🔍 Content Classification")

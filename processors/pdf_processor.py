@@ -1,9 +1,10 @@
 from models.processing_result import ProcessingResult
+from logger.logger import logger
 
 
 def process_pdf(content):
 
-    print("📥 PDF Processor")
+    logger.info("📥 PDF Processor: Processing PDF content")
 
     return ProcessingResult(
         status="success",

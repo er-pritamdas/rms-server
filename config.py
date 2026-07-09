@@ -3,6 +3,9 @@ Application Configuration
 """
 
 from pathlib import Path
+from logger.logger import logger
+
+logger.info("Application configuration loaded.")
 
 # --------------------------------------------------
 # Logging

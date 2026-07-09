@@ -8,6 +8,9 @@ classifying a ParsedMessage.
 from typing import Literal
 
 from pydantic import BaseModel, Field
+from logger.logger import logger
+
+logger.info("Detected content models module loaded.")
 
 
 class DetectedContent(BaseModel):

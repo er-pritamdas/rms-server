@@ -10,6 +10,7 @@ from models.content import (
     TextContent,
 )
 from models.message import ParsedMessage
+from logger.logger import logger
 
 
 def parse_text(element: dict) -> TextContent:
@@ -75,6 +76,7 @@ def parse_message(event: dict) -> ParsedMessage:
     """
     Convert a Slack Event into our internal ParsedMessage.
     """
+    logger.info(f"Parsing Slack message event from user '{event.get('user')}' in channel '{event.get('channel')}'")
 
     parsed_message = ParsedMessage(
         user=event.get("user", ""),

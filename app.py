@@ -14,6 +14,7 @@ from flask import Flask, jsonify, request
 
 from config import LOG_FILE, MAX_LOGS
 from handlers.message_handler import handle_message
+from logger.logger import logger
 
 load_dotenv()
 
@@ -35,11 +36,14 @@ def slack_events():
     """
 
     data = request.get_json()
+    logger.info("================================================================================")
+    logger.info("Received incoming Slack event.")
 
     save_event_log(data)
 
     # Slack URL Verification
     if data.get("type") == "url_verification":
+        logger.info("Slack URL verification challenge requested.")
         return jsonify(
             {
                 "challenge": data["challenge"]
@@ -58,15 +62,15 @@ def handle_event(data: dict):
 
     event = data.get("event", {})
     event_type = event.get("type")
+    logger.info(f"Received event type: {event_type}")
 
     if event_type == "message":
-
+        logger.info(f"Received raw message text: '{event.get('text')}'")
         parsed_message = parse_message(event)
-
         handle_message(parsed_message)
 
     else:
-        print(f"Unhandled Event : {event_type}")
+        logger.warning(f"Unhandled Event type: {event_type}")
 
 
 def save_event_log(data: dict):
@@ -107,6 +111,7 @@ def save_event_log(data: dict):
 
 
 if __name__ == "__main__":
+    logger.info("Starting RMS Server on port 5000...")
     app.run(
         host="0.0.0.0",
         port=5000,

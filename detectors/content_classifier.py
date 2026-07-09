@@ -23,6 +23,7 @@ from models.detected_content import (
     YoutubeVideo,
 )
 from models.message import ParsedMessage
+from logger.logger import logger
 
 
 # --------------------------------------------------------------------
@@ -70,7 +71,7 @@ def classify_content(
     """
     Classify all links inside a ParsedMessage.
     """
-
+    logger.info("Classifying message link contents...")
     detected: list[DetectedContent] = []
 
     for content in message.content:
@@ -78,7 +79,9 @@ def classify_content(
         if not isinstance(content, LinkContent):
             continue
 
-        detected.append(classify_url(content.value))
+        classified = classify_url(content.value)
+        logger.info(f"URL '{content.value}' classified as '{type(classified).__name__}'")
+        detected.append(classified)
 
     return detected
 

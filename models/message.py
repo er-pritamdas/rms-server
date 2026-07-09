@@ -3,6 +3,9 @@ Message Models
 """
 
 from pydantic import BaseModel
+from logger.logger import logger
+
+logger.info("Message models module loaded.")
 
 from models.content import Content
 

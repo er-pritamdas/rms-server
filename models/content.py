@@ -7,6 +7,9 @@ Every Slack message is converted into one or more Content objects.
 from typing import Literal, Optional
 
 from pydantic import BaseModel
+from logger.logger import logger
+
+logger.info("Content models module loaded.")
 
 
 class Content(BaseModel):

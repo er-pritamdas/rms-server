@@ -1,9 +1,10 @@
 from models.processing_result import ProcessingResult
+from logger.logger import logger
 
 
 def process_youtube(content):
 
-    print("📥 YouTube Processor")
+    logger.info(f"📥 YouTube Processor: Processing YouTube resource type '{content.type}'")
 
     return ProcessingResult(
         status="success",

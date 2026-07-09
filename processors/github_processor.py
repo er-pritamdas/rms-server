@@ -1,9 +1,10 @@
 from models.processing_result import ProcessingResult
+from logger.logger import logger
 
 
 def process_github(content):
 
-    print("📥 GitHub Processor")
+    logger.info("📥 GitHub Processor: Processing GitHub repository")
 
     return ProcessingResult(
         status="success",
